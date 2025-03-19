@@ -98,6 +98,15 @@
         padding: 3px 8px;
         background-color: #e7f4ff;
         border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .history-move:hover {
+        background-color: #c7e4ff;
+      }
+      .history-move.active {
+        background-color: #4a90e2;
+        color: white;
       }
       .input-move-container {
         display: flex;
@@ -188,6 +197,12 @@
         margin-top: 10px;
         margin-bottom: 15px;
       }
+      .extended-nav-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
       .copy-button {
         margin-top: 10px;
         margin-bottom: 15px;
@@ -224,6 +239,10 @@
         margin-left: 5px;
         font-size: 0.9em;
       }
+      .nav-btn-group {
+        display: flex;
+        gap: 5px;
+      }
     </style>
   </head>
   <body>
@@ -238,10 +257,16 @@
           <button id="startPositionBtn">初期配置に戻す</button>
           <button id="clearBoardBtn">全ての駒を取り除く</button>
         </div>
-        <!-- 追加：一手進む・戻るボタン -->
-        <div class="nav-controls">
-          <button id="prevMoveBtn" disabled>←前の手</button>
-          <button id="nextMoveBtn" disabled>次の手→</button>
+        <!-- 拡張ナビゲーションコントロール -->
+        <div class="extended-nav-controls">
+          <div class="nav-btn-group">
+            <button id="firstMoveBtn" title="最初の局面へ">|◀</button>
+            <button id="prevMoveBtn" title="前の手">◀</button>
+          </div>
+          <div class="nav-btn-group">
+            <button id="nextMoveBtn" title="次の手">▶</button>
+            <button id="lastMoveBtn" title="最後の局面へ">▶|</button>
+          </div>
         </div>
 
         <!-- PGNインポート機能 -->
@@ -417,6 +442,34 @@
           }
         });
 
+        // 追加：最初の局面へ移動するボタン
+        $("#firstMoveBtn").click(function () {
+          if (positionHistory.length > 0) {
+            currentPosition = 0;
+            const position = positionHistory[currentPosition];
+            game = new Chess(position.fen);
+            board.position(position.fen);
+            updateBoard();
+            updateTurnIndicators();
+            updateNavigationButtons();
+            highlightActiveMove();
+          }
+        });
+
+        // 追加：最後の局面へ移動するボタン
+        $("#lastMoveBtn").click(function () {
+          if (positionHistory.length > 0) {
+            currentPosition = positionHistory.length - 1;
+            const position = positionHistory[currentPosition];
+            game = new Chess(position.fen);
+            board.position(position.fen);
+            updateBoard();
+            updateTurnIndicators();
+            updateNavigationButtons();
+            highlightActiveMove();
+          }
+        });
+
         // 初期状態の更新
         updateBoard();
         updateTurnIndicators();
@@ -463,6 +516,7 @@ PGN: ${pgn}`;
             updateBoard();
             updateTurnIndicators();
             updateNavigationButtons();
+            highlightActiveMove();
           }
         });
 
@@ -476,6 +530,7 @@ PGN: ${pgn}`;
             updateBoard();
             updateTurnIndicators();
             updateNavigationButtons();
+            highlightActiveMove();
           }
         });
 
@@ -508,6 +563,7 @@ PGN: ${pgn}`;
 
               updateBoard();
               updateTurnIndicators();
+              highlightActiveMove();
 
               // インポート成功のメッセージ
               alert("棋譜を正常に読み込みました");
@@ -533,7 +589,44 @@ PGN: ${pgn}`;
           pgn: game.pgn(),
         });
         updateNavigationButtons();
+
+        // 履歴の手をクリックしたときのイベント委任設定
+        $(document).on("click", ".history-move", function () {
+          const moveIndex = $(this).data("move-index");
+          if (moveIndex !== undefined) {
+            // moveIndexが0から始まるので、初期状態は0、最初の手は1
+            const targetPosition = parseInt(moveIndex) + 1;
+            if (
+              targetPosition >= 0 &&
+              targetPosition < positionHistory.length
+            ) {
+              currentPosition = targetPosition;
+              const position = positionHistory[currentPosition];
+              game = new Chess(position.fen);
+              board.position(position.fen);
+              updateBoard();
+              updateTurnIndicators();
+              updateNavigationButtons();
+              highlightActiveMove();
+            }
+          }
+        });
       });
+
+      // 現在の局面に対応する手をハイライトする関数
+      function highlightActiveMove() {
+        $(".history-move").removeClass("active");
+        // currentPositionが0の場合（初期状態）は何もハイライトしない
+        if (
+          currentPosition > 0 &&
+          currentPosition <= $(".history-move").length
+        ) {
+          // currentPositionは1始まり、moveIndexは0始まりなので-1する
+          $(`.history-move[data-move-index="${currentPosition - 1}"]`).addClass(
+            "active"
+          );
+        }
+      }
 
       // PGNから各手のコメントを抽出する関数
       function extractComments(pgnText) {
@@ -611,6 +704,11 @@ PGN: ${pgn}`;
           "disabled",
           currentPosition >= positionHistory.length - 1
         );
+        $("#firstMoveBtn").prop("disabled", currentPosition <= 0);
+        $("#lastMoveBtn").prop(
+          "disabled",
+          currentPosition >= positionHistory.length - 1
+        );
       }
 
       // 追加：局面の履歴を更新
@@ -630,6 +728,7 @@ PGN: ${pgn}`;
 
         // ボタンの有効/無効状態を更新
         updateNavigationButtons();
+        highlightActiveMove();
       }
 
       // 記法で駒を動かす関数
@@ -839,8 +938,8 @@ PGN: ${pgn}`;
             lastMoveWasWhite = false;
           }
 
-          // 指し手を表示
-          html += `<span class="history-move">${move.san}</span>`;
+          // 指し手を表示（クリック可能にするためにdata-move-index属性を追加）
+          html += `<span class="history-move" data-move-index="${i}">${move.san}</span>`;
 
           // コメントがあれば表示
           const moveKey = lastMoveWasWhite
@@ -858,6 +957,9 @@ PGN: ${pgn}`;
         }
 
         $("#history").html(html);
+
+        // 現在のポジションに対応する手をハイライト
+        highlightActiveMove();
       }
     </script>
   </body>
