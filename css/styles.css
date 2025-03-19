@@ -1,0 +1,243 @@
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  line-height: 1.6;
+  color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 0.5em;
+  color: #2c3e50;
+}
+.container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+.board-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.control-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+button {
+  padding: 8px 16px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #357abd;
+}
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+.fen-code {
+  font-family: monospace;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  word-break: break-all;
+}
+.pgn-display {
+  max-height: 100px;
+  overflow-y: auto;
+  font-family: monospace;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+#history {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  min-height: 50px;
+}
+.history-move {
+  display: inline-block;
+  margin: 2px;
+  padding: 3px 8px;
+  background-color: #e7f4ff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.history-move:hover {
+  background-color: #c7e4ff;
+}
+.history-move.active {
+  background-color: #4a90e2;
+  color: white;
+}
+/* 現在の局面より先の指し手のスタイル */
+.history-move.future-move {
+  background-color: #f0f0f0;
+  color: #999;
+}
+.history-move.future-move:hover {
+  background-color: #e0e0e0;
+}
+.input-move-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+}
+.input-move-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.input-move-white {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  flex: 1;
+  border-radius: 4px;
+}
+.input-move-black {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  flex: 1;
+  border-radius: 4px;
+}
+.move-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: monospace;
+}
+.move-button {
+  padding: 8px 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.move-error {
+  color: #e74c3c;
+  font-size: 0.9em;
+  margin-top: 5px;
+  display: none;
+}
+.notation-help {
+  font-size: 0.85em;
+  margin-top: 10px;
+  color: #666;
+}
+.white-indicator,
+.black-indicator {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.white-indicator {
+  background-color: white;
+  border: 1px solid #ddd;
+}
+.black-indicator {
+  background-color: #333;
+}
+.current-turn {
+  font-weight: bold;
+  color: #4a90e2;
+  margin-left: 5px;
+}
+.not-turn {
+  color: #999;
+}
+.section-title {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  font-weight: bold;
+}
+.nav-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.extended-nav-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.copy-button {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.pgn-import-container {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+}
+.pgn-textarea {
+  width: 100%;
+  height: 100px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: monospace;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+.import-button {
+  width: 100%;
+  margin-top: 5px;
+}
+.move-number {
+  display: inline-block;
+  color: #777;
+  margin-right: 5px;
+}
+.comment-text {
+  font-style: italic;
+  color: #5a9a5a;
+  margin-left: 5px;
+  font-size: 0.9em;
+}
+.nav-btn-group {
+  display: flex;
+  gap: 5px;
+}
