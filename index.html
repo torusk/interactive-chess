@@ -193,6 +193,37 @@
         margin-bottom: 15px;
         width: 100%;
       }
+      .pgn-import-container {
+        margin-top: 20px;
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .pgn-textarea {
+        width: 100%;
+        height: 100px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: monospace;
+        margin-bottom: 10px;
+        resize: vertical;
+      }
+      .import-button {
+        width: 100%;
+        margin-top: 5px;
+      }
+      .move-number {
+        display: inline-block;
+        color: #777;
+        margin-right: 5px;
+      }
+      .comment-text {
+        font-style: italic;
+        color: #5a9a5a;
+        margin-left: 5px;
+        font-size: 0.9em;
+      }
     </style>
   </head>
   <body>
@@ -211,6 +242,19 @@
         <div class="nav-controls">
           <button id="prevMoveBtn" disabled>←前の手</button>
           <button id="nextMoveBtn" disabled>次の手→</button>
+        </div>
+
+        <!-- PGNインポート機能 -->
+        <div class="pgn-import-container">
+          <div class="section-title">PGN棋譜読み込み</div>
+          <textarea
+            id="pgn-import-textarea"
+            class="pgn-textarea"
+            placeholder="ここにPGN形式の棋譜を貼り付けてください。例：1. e4 e5 2. Nf3 Nc6 ..."
+          ></textarea>
+          <button id="import-pgn-btn" class="import-button">
+            棋譜を読み込む
+          </button>
         </div>
       </div>
 
@@ -288,7 +332,10 @@
       let board = null;
       let game = new Chess();
 
-      // 局面の履歴を保存する変数を追加
+      // コメント付きの棋譜を保存する変数
+      let gameComments = {};
+
+      // 局面の履歴を保存する変数
       let currentPosition = 0;
       let positionHistory = [];
 
@@ -320,12 +367,15 @@
           updateBoard();
           updateTurnIndicators();
           // 履歴を初期化
-          positionHistory = [{
-            fen: game.fen(),
-            pgn: game.pgn()
-          }];
+          positionHistory = [
+            {
+              fen: game.fen(),
+              pgn: game.pgn(),
+            },
+          ];
           currentPosition = 0;
           updateNavigationButtons();
+          gameComments = {}; // コメントもクリア
         });
 
         $("#clearBoardBtn").click(function () {
@@ -334,12 +384,15 @@
           updateBoard();
           updateTurnIndicators();
           // 履歴を初期化
-          positionHistory = [{
-            fen: game.fen(),
-            pgn: game.pgn()
-          }];
+          positionHistory = [
+            {
+              fen: game.fen(),
+              pgn: game.pgn(),
+            },
+          ];
           currentPosition = 0;
           updateNavigationButtons();
+          gameComments = {}; // コメントもクリア
         });
 
         // 記法入力による駒の移動処理
@@ -369,38 +422,39 @@
         updateTurnIndicators();
 
         // 追加：履歴をコピーする機能
-        $("#copyHistoryBtn").click(function() {
+        $("#copyHistoryBtn").click(function () {
           // 現在の盤面情報を整形
           const fen = game.fen();
           const pgn = game.pgn();
-          const turn = game.turn() === 'w' ? '白' : '黒';
-          const history = game.history().join(', ');
-          
+          const turn = game.turn() === "w" ? "白" : "黒";
+          const history = game.history().join(", ");
+
           const clipboardText = `【チェス局面情報】
 手番: ${turn}
 FEN: ${fen}
 指し手の履歴: ${history}
 PGN: ${pgn}`;
-          
+
           // クリップボードにコピー
-          navigator.clipboard.writeText(clipboardText)
+          navigator.clipboard
+            .writeText(clipboardText)
             .then(() => {
               alert("局面情報をクリップボードにコピーしました");
             })
-            .catch(err => {
+            .catch((err) => {
               // クリップボードAPIがサポートされていない場合の代替手段
-              const textarea = document.createElement('textarea');
+              const textarea = document.createElement("textarea");
               textarea.value = clipboardText;
               document.body.appendChild(textarea);
               textarea.select();
-              document.execCommand('copy');
+              document.execCommand("copy");
               document.body.removeChild(textarea);
               alert("局面情報をクリップボードにコピーしました");
             });
         });
 
         // 追加：前の手に戻るボタン
-        $("#prevMoveBtn").click(function() {
+        $("#prevMoveBtn").click(function () {
           if (currentPosition > 0) {
             currentPosition--;
             const position = positionHistory[currentPosition];
@@ -413,7 +467,7 @@ PGN: ${pgn}`;
         });
 
         // 追加：次の手に進むボタン
-        $("#nextMoveBtn").click(function() {
+        $("#nextMoveBtn").click(function () {
           if (currentPosition < positionHistory.length - 1) {
             currentPosition++;
             const position = positionHistory[currentPosition];
@@ -425,18 +479,138 @@ PGN: ${pgn}`;
           }
         });
 
+        // 追加：PGN棋譜読み込みボタン
+        $("#import-pgn-btn").click(function () {
+          const pgnText = $("#pgn-import-textarea").val().trim();
+          if (!pgnText) {
+            alert("棋譜を入力してください");
+            return;
+          }
+
+          try {
+            // PGNテキストからコメントを抽出して保存
+            gameComments = extractComments(pgnText);
+
+            // コメントを削除したPGNをチェスエンジンに読み込ませる
+            const cleanPgn = cleanPgnForImport(pgnText);
+
+            // 新しいゲームインスタンスを作成して棋譜を読み込む
+            const newGame = new Chess();
+            const success = newGame.load_pgn(cleanPgn);
+
+            if (success) {
+              // 読み込みに成功したら、ゲームを置き換え
+              game = newGame;
+              board.position(game.fen());
+
+              // 履歴を更新
+              recreatePositionHistory();
+
+              updateBoard();
+              updateTurnIndicators();
+
+              // インポート成功のメッセージ
+              alert("棋譜を正常に読み込みました");
+
+              // テキストエリアをクリア
+              $("#pgn-import-textarea").val("");
+            } else {
+              alert(
+                "PGN形式が正しくありません。正しい棋譜を入力してください。"
+              );
+            }
+          } catch (error) {
+            console.error("PGN読み込みエラー:", error);
+            alert(
+              "棋譜の読み込み中にエラーが発生しました。形式を確認してください。"
+            );
+          }
+        });
+
         // 初期履歴の作成
         positionHistory.push({
           fen: game.fen(),
-          pgn: game.pgn()
+          pgn: game.pgn(),
         });
         updateNavigationButtons();
       });
 
+      // PGNから各手のコメントを抽出する関数
+      function extractComments(pgnText) {
+        const comments = {};
+
+        // コメントを抽出する正規表現
+        const commentRegex = /(\d+\.\s*\S+\s*(?:\S+)?)(?:\s*\{([^}]+)\})?/g;
+
+        let match;
+        while ((match = commentRegex.exec(pgnText)) !== null) {
+          // 手と関連するコメントを取得
+          const move = match[1].trim();
+          const comment = match[2] ? match[2].trim() : null;
+
+          if (comment) {
+            comments[move] = comment;
+          }
+        }
+
+        return comments;
+      }
+
+      // PGNからコメントなどを削除して、chess.jsが読み込めるようにクリーンアップする関数
+      function cleanPgnForImport(pgnText) {
+        // PGNヘッダーとゲーム部分を分離
+        const headerEndIndex = pgnText.lastIndexOf("]") + 1;
+        const headers = pgnText.substring(0, headerEndIndex);
+        let moves = pgnText.substring(headerEndIndex);
+
+        // コメントを削除 (波括弧内のテキスト)
+        moves = moves.replace(/\{[^}]*\}/g, "");
+
+        // $1, $2などのアノテーションを削除
+        moves = moves.replace(/\$\d+/g, "");
+
+        // 余分な空白を整理
+        moves = moves.replace(/\s+/g, " ").trim();
+
+        return headers + " " + moves;
+      }
+
+      // PGN読み込み時に棋譜履歴を再構築する関数
+      function recreatePositionHistory() {
+        // 履歴をリセット
+        positionHistory = [];
+
+        // 初期位置
+        const initialGame = new Chess();
+        positionHistory.push({
+          fen: initialGame.fen(),
+          pgn: initialGame.pgn(),
+        });
+
+        // すべての手を再生
+        const moves = game.history();
+        const tempGame = new Chess();
+
+        for (let i = 0; i < moves.length; i++) {
+          tempGame.move(moves[i]);
+          positionHistory.push({
+            fen: tempGame.fen(),
+            pgn: tempGame.pgn(),
+          });
+        }
+
+        // 現在位置を最新に設定
+        currentPosition = positionHistory.length - 1;
+        updateNavigationButtons();
+      }
+
       // 追加：ナビゲーションボタンの有効/無効状態を更新
       function updateNavigationButtons() {
         $("#prevMoveBtn").prop("disabled", currentPosition <= 0);
-        $("#nextMoveBtn").prop("disabled", currentPosition >= positionHistory.length - 1);
+        $("#nextMoveBtn").prop(
+          "disabled",
+          currentPosition >= positionHistory.length - 1
+        );
       }
 
       // 追加：局面の履歴を更新
@@ -445,15 +619,15 @@ PGN: ${pgn}`;
         if (currentPosition < positionHistory.length - 1) {
           positionHistory = positionHistory.slice(0, currentPosition + 1);
         }
-        
+
         // 現在の局面を保存
         positionHistory.push({
           fen: game.fen(),
-          pgn: game.pgn()
+          pgn: game.pgn(),
         });
-        
+
         currentPosition = positionHistory.length - 1;
-        
+
         // ボタンの有効/無効状態を更新
         updateNavigationButtons();
       }
@@ -579,14 +753,19 @@ PGN: ${pgn}`;
 
         updateBoard();
         updateTurnIndicators();
-        
+
         // 履歴を初期化
-        positionHistory = [{
-          fen: game.fen(),
-          pgn: game.pgn()
-        }];
+        positionHistory = [
+          {
+            fen: game.fen(),
+            pgn: game.pgn(),
+          },
+        ];
         currentPosition = 0;
         updateNavigationButtons();
+
+        // コメントをリセット
+        gameComments = {};
       }
 
       // ドラッグ開始時のチェック
@@ -644,15 +823,37 @@ PGN: ${pgn}`;
       function updateHistory() {
         const history = game.history({ verbose: true });
         let html = "";
+        let moveNumber = 1;
+        let lastMoveWasWhite = true;
 
         for (let i = 0; i < history.length; i++) {
           const move = history[i];
+
+          // 手番号を表示するかどうか
           if (i % 2 === 0) {
-            html += `<span class="history-move">${Math.floor(i / 2) + 1}.${
-              move.san
-            }</span>`;
+            html += `<span class="move-number">${
+              Math.floor(i / 2) + 1
+            }.</span>`;
+            lastMoveWasWhite = true;
           } else {
-            html += `<span class="history-move">${move.san}</span>`;
+            lastMoveWasWhite = false;
+          }
+
+          // 指し手を表示
+          html += `<span class="history-move">${move.san}</span>`;
+
+          // コメントがあれば表示
+          const moveKey = lastMoveWasWhite
+            ? `${moveNumber}.${move.san}`
+            : `${moveNumber}...${move.san}`;
+
+          if (gameComments[moveKey]) {
+            html += `<span class="comment-text">${gameComments[moveKey]}</span>`;
+          }
+
+          // 黒の手の後に移動
+          if (!lastMoveWasWhite) {
+            moveNumber++;
           }
         }
 
