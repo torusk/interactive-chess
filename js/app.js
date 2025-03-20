@@ -1,5 +1,8 @@
 // app.js - アプリケーション全体の初期化と、他のモジュールの連携を担当
 
+// グローバルスコープで updateUI を定義（関数宣言を外に出す）
+let updateUI;
+
 // DOMが読み込まれた後に実行
 $(document).ready(function () {
   // チェス盤の初期化
@@ -9,7 +12,7 @@ $(document).ready(function () {
   historyManager.initialize(chessBoard.getGame().fen());
 
   // 盤面更新時のコールバックを設定
-  function updateUI() {
+  updateUI = function () {
     const game = chessBoard.getGame();
     uiController.updateBoard(game);
     uiController.updateTurnIndicators(game);
@@ -21,7 +24,7 @@ $(document).ready(function () {
     // ナビゲーションボタンの状態を更新
     const navState = historyManager.getNavigationState();
     uiController.updateNavigationButtons(navState);
-  }
+  };
 
   // 履歴を初期化して表示
   updateUI();
@@ -165,17 +168,37 @@ $(document).ready(function () {
       }
     });
 
-    // 履歴の手をクリックしたときのイベント委任設定
+    // 履歴の手をクリックしたときのイベント委任設定 - 新しい処理で置き換え
     $(document).on("click", ".history-move", function () {
       const moveIndex = $(this).data("move-index");
-      if (moveIndex !== undefined) {
-        // moveIndexが0から始まるので、初期状態は0、最初の手は1
+      const variationId = $(this).data("variation");
+      const isMainLine = $(this).data("main-line");
+
+      if (variationId && !isMainLine) {
+        // 分岐の手をクリック
+        const position = historyManager.goToVariation(variationId, moveIndex);
+        if (position) {
+          chessBoard.setPosition(position.fen);
+          updateUI();
+        }
+      } else if (moveIndex !== undefined) {
+        // 通常の手をクリック
         const targetPosition = parseInt(moveIndex) + 1;
         const position = historyManager.goToPosition(targetPosition);
         if (position) {
           chessBoard.setPosition(position.fen);
           updateUI();
         }
+      }
+    });
+
+    // 分岐後にメインラインに戻るボタンのイベント処理
+    $(document).on("click", ".return-to-main", function () {
+      const position = $(this).data("position");
+      const pos = historyManager.returnToMainLine(position);
+      if (pos) {
+        chessBoard.setPosition(pos.fen);
+        updateUI();
       }
     });
   }
