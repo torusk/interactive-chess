@@ -59,9 +59,11 @@ $(document).ready(function () {
       chessBoard.setStartPosition();
     });
 
+    /* 将来の機能拡張のためにコメントアウト
     $("#clearBoardBtn").click(function () {
       chessBoard.clearBoard();
     });
+    */
 
     // 記法入力による駒の移動処理
     $("#white-move-btn").click(function () {

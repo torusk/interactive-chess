@@ -199,6 +199,7 @@ button:disabled {
 .extended-nav-controls {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 5px;
   margin-bottom: 10px;
 }
@@ -241,6 +242,12 @@ button:disabled {
 .nav-btn-group {
   display: flex;
   gap: 5px;
+}
+
+.main-btn-group {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
 }
 
 /* styles.css に追加するスタイル */

@@ -19,18 +19,23 @@
     <div class="container">
       <div class="board-container">
         <div id="board" style="width: 400px"></div>
-        <div class="controls">
-          <button id="resetBtn">リセット</button>
-          <button id="flipBtn">反転</button>
-          <button id="startPositionBtn">初期配置</button>
-          <button id="clearBoardBtn">全駒削除</button>
-        </div>
+        <!-- コントロールボタンはナビゲーションコントロールに統合済み -->
         <!-- 拡張ナビゲーションコントロール -->
         <div class="extended-nav-controls">
           <div class="nav-btn-group">
             <button id="firstMoveBtn" title="最初の局面へ">|◀</button>
             <button id="prevMoveBtn" title="前の手">◀</button>
           </div>
+          
+          <div class="main-btn-group">
+            <button id="resetBtn">リセット</button>
+            <button id="flipBtn">反転</button>
+            <button id="startPositionBtn">初期配置</button>
+            <!-- 将来の機能拡張のためにコメントアウト
+            <button id="clearBoardBtn">全駒削除</button>
+            -->
+          </div>
+          
           <div class="nav-btn-group">
             <button id="nextMoveBtn" title="次の手">▶</button>
             <button id="lastMoveBtn" title="最後の局面へ">▶|</button>
