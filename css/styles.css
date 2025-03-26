@@ -241,14 +241,24 @@ button:disabled {
   font-size: 0.9em;
 }
 /* ナビゲーションコントロールの新しいスタイル */
-.utility-btn-group {
+.left-btn-group, .right-btn-group {
+  flex: 1;
   display: flex;
-  gap: 10px;
+}
+
+.left-btn-group {
+  justify-content: flex-start;
+}
+
+.right-btn-group {
+  justify-content: flex-end;
 }
 
 .navigation-controls {
   display: flex;
   gap: 5px;
+  flex: 2;
+  justify-content: center;
 }
 
 /* 分岐のある手のスタイル */

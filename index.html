@@ -22,18 +22,22 @@
         <!-- コントロールボタンはナビゲーションコントロールに統合済み -->
         <!-- 拡張ナビゲーションコントロール -->
         <div class="extended-nav-controls">
-          <!-- 左側に使用頻度の低いボタンを配置 -->
-          <div class="utility-btn-group">
+          <!-- 左端にリセットボタン -->
+          <div class="left-btn-group">
             <button id="resetBtn" title="全ての履歴と局面をリセット">リセット</button>
-            <button id="flipBtn" title="盤面を反転">反転</button>
           </div>
           
-          <!-- 右側に頻繁に使用するナビゲーションボタンを配置 -->
+          <!-- 中央にナビゲーションボタン -->
           <div class="navigation-controls">
             <button id="firstMoveBtn" title="初期局面に移動（履歴は保持）" class="first-move-btn">|◀</button>
             <button id="prevMoveBtn" title="前の手">◀</button>
             <button id="nextMoveBtn" title="次の手">▶</button>
             <button id="lastMoveBtn" title="最後の局面へ">▶|</button>
+          </div>
+          
+          <!-- 右端に反転ボタン -->
+          <div class="right-btn-group">
+            <button id="flipBtn" title="盤面を反転">反転</button>
           </div>
         </div>
 
