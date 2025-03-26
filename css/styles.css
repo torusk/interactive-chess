@@ -8,12 +8,16 @@
     border-radius: 8px 8px 0 0;
     border-right: solid 1px #ccc;
     border-bottom: none;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
   }
   
   .control-container {
     border-radius: 0 0 8px 8px;
-    width: 400px;
-    max-width: 400px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
   }
 }
 
@@ -85,6 +89,13 @@
   .title-container {
     flex-direction: column;
     gap: 10px;
+  }
+  
+  /* ボタンが流れないように幅を調整 */
+  .board-container button,
+  .control-container button {
+    padding: 5px 8px;
+    font-size: 0.85em;
   }
 }
 
@@ -375,12 +386,14 @@ button:disabled {
   display: flex;
   gap: 5px;
   margin-bottom: 5px;
+  flex-wrap: wrap; /* レスポンシブ対応のために追加 */
 }
 
 #fen-input,
 #pgn-import-input,
 .move-input {
   flex: 1;
+  min-width: 100px; /* 最小幅を設定して下に回り込むように */
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -566,13 +579,15 @@ button:disabled {
 /* レスポンシブ時にコントロールコンテナを調整 */
 @media (max-width: 1200px) {
   .control-container {
-    width: 100% !important;
+    width: 100%;
     max-width: 520px;
     height: auto !important;
+    margin: 0 auto;
   }
   
   .board-container {
     height: auto !important;
+    margin: 0 auto;
   }
   
   .container {
