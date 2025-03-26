@@ -277,7 +277,7 @@ $(document).ready(function () {
     $('#' + size + 'BoardBtn').addClass('size-btn-active');
     
     // コントロールコンテナのサイズも一致させる
-    $('.control-container').css('width', width + 'px');
+    $('.control-container').css('width', width + 'px').css('max-width', width + 'px');
     
     // ボードの下のボタン等の幅も調整
     $('.extended-nav-controls').css('width', width + 'px');

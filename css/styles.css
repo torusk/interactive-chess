@@ -11,12 +11,22 @@
     width: 100%;
     max-width: 520px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* チェス盤を中央に配置 */
   }
   
   .control-container {
     border-radius: 0 0 8px 8px;
     width: 100%;
     max-width: 520px;
+    margin: 0 auto;
+  }
+  
+  /* 下のカラムの幅を上のカラムに合わせる */
+  .chess-board,
+  .extended-nav-controls,
+  .inputs-row {
     margin: 0 auto;
   }
 }
@@ -338,6 +348,7 @@ button:disabled {
 .chess-board {
   width: 400px;
   max-width: 100%;
+  margin: 0 auto;
 }
 
 /* ナビゲーションコントロールもレスポンシブに */
@@ -566,6 +577,10 @@ button:disabled {
 }
 
 /* レスポンシブ対応のためのチェス盤サイズクラス */
+.board-size-small, .board-size-medium, .board-size-large {
+  margin: 0 auto; /* どのサイズでも中央揃えに */
+}
+
 .board-size-small {
   width: 320px;
 }
