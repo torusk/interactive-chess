@@ -52,9 +52,22 @@ $(document).ready(function () {
   // ページ読み込み時に画面幅に応じて盤面サイズを自動調整
   autoAdjustBoardSize();
   
-  // リサイズ時に盤面サイズを自動調整
+  // リサイズ時に盤面サイズとレイアウトを自動調整
+  let lastWindowWidth = $(window).width();
   $(window).resize(function() {
+    const currentWindowWidth = $(window).width();
+    const layoutChanged = 
+      (lastWindowWidth <= 820 && currentWindowWidth > 820) || 
+      (lastWindowWidth > 820 && currentWindowWidth <= 820);
+    
+    lastWindowWidth = currentWindowWidth;
+    
     autoAdjustBoardSize();
+    
+    // レイアウトが変わった場合はコンテナの高さも再計算
+    if (layoutChanged) {
+      setTimeout(adjustContainerHeights, 200);
+    }
   });
 
   // UIイベントの設定関数
@@ -242,21 +255,24 @@ $(document).ready(function () {
     // 現在のウィンドウ幅を取得
     const windowWidth = $(window).width();
     
+    // 左右での表示かどうかを確認
+    const isHorizontalLayout = windowWidth > 820;
+    
     // 画面幅に応じてサイズを切り替え
     if (windowWidth < 768) {
       // 小さい画面ではスモールサイズ
-      changeBoardSize('small');
+      changeBoardSize('small', isHorizontalLayout);
     } else if (windowWidth < 1200) {
       // 中程度の画面ではミディアムサイズ
-      changeBoardSize('medium');
+      changeBoardSize('medium', isHorizontalLayout);
     } else {
       // 大きい画面ではラージサイズ
-      changeBoardSize('large');
+      changeBoardSize('large', isHorizontalLayout);
     }
   }
   
   // チェス盤のサイズを変更する関数
-  function changeBoardSize(size) {
+  function changeBoardSize(size, isHorizontalLayout = true) {
     // サイズに応じて幅を設定
     let width;
     if (size === 'small') {
@@ -276,8 +292,14 @@ $(document).ready(function () {
     $('.size-btn').removeClass('size-btn-active');
     $('#' + size + 'BoardBtn').addClass('size-btn-active');
     
-    // コントロールコンテナのサイズも一致させる
-    $('.control-container').css('width', width + 'px').css('max-width', width + 'px');
+    if (isHorizontalLayout) {
+      // 左右表示の場合、コントロールコンテナのサイズを盤面に合わせる
+      $('.control-container').css('width', width + 'px').css('max-width', width + 'px');
+    } else {
+      // 上下表示の場合、コントロールコンテナは自然な幅にする
+      $('.control-container').css('width', '');
+      $('.board-container').css('width', '');
+    }
     
     // ボードの下のボタン等の幅も調整
     $('.extended-nav-controls').css('width', width + 'px');

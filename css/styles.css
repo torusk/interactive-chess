@@ -5,25 +5,17 @@
   }
   
   .board-container {
-    border-radius: 8px 8px 0 0;
-    border-right: solid 1px #ccc;
     border-bottom: none;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center; /* チェス盤を中央に配置 */
+    align-items: center;
+    box-sizing: border-box;
   }
   
   .control-container {
-    border-radius: 0 0 8px 8px;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
+    box-sizing: border-box;
   }
   
-  /* 下のカラムの幅を上のカラムに合わせる */
   .chess-board,
   .extended-nav-controls,
   .inputs-row {
@@ -113,9 +105,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.5em;
-  border-bottom: 2px solid #4a90e2;
-  padding-bottom: 0.3em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #eee; /* 薄いボーダーに変更 */
+  padding-bottom: 0.5em;
 }
 
 .title-container h1 {
@@ -133,7 +125,7 @@ body {
   max-width: 1500px; /* サイズを広げてデスクトップで十分な余白を確保 */
   margin: 0 auto;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: white; /* 背景色を白に変更 */
 }
 h1 {
   font-size: 1.5em;
@@ -141,18 +133,18 @@ h1 {
 }
 .container {
   display: flex;
-  justify-content: center; /* センタリングに変更 */
+  justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  max-width: 1400px; /* デスクトップ画面幅に合わせてさらに広げる */
+  max-width: 1400px;
   margin: 0 auto;
-  gap: 20px; /* カラム間の余白を増やす */
+  gap: 0;
 }
 .board-container {
   background-color: white;
   padding: 15px 15px 10px 15px;
-  border-radius: 8px 0 0 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  box-shadow: none;
   margin: 0;
   border-right: none;
   display: flex;
@@ -162,8 +154,8 @@ h1 {
 .control-container {
   background-color: white;
   padding: 15px;
-  border-radius: 0 8px 8px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  box-shadow: none;
   width: 420px; /* デフォルトはMediumサイズに合わせる */
   max-width: 100%; /* レスポンシブ対応 */
   margin: 0;
@@ -215,7 +207,8 @@ button:disabled {
   overflow-y: auto;
   margin-top: 5px;
   padding: 6px;
-  background-color: #f5f5f5;
+  background-color: white; /* 背景色を白に変更 */
+  border: 1px solid #eee; /* 薄いボーダーを追加 */
   border-radius: 4px;
   min-height: 120px;
   font-size: 0.9em;
@@ -302,7 +295,8 @@ button:disabled {
   font-size: 0.8em;
   margin-top: 3px;
   padding: 6px;
-  background-color: #f5f5f5;
+  background-color: white; /* 背景色を白に変更 */
+  border: 1px solid #eee; /* 薄いボーダーを追加 */
   border-radius: 4px;
   color: #666;
   text-align: center;
@@ -332,11 +326,13 @@ button:disabled {
   margin-left: 2px;
 }
 .section-title {
-  margin-top: 10px;
+  margin-top: 15px;
   margin-bottom: 6px;
-  color: #2c3e50;
-  font-weight: bold;
+  color: #555; /* 色を薄く */
+  font-weight: normal; /* 太字を解除 */
   font-size: 0.95em;
+  border-bottom: 1px solid #eee; /* 薄い下線を追加 */
+  padding-bottom: 5px;
 }
 .nav-controls {
   display: flex;
@@ -389,8 +385,9 @@ button:disabled {
 .input-section {
   flex: 1;
   min-width: 120px;
-  background-color: #f8f8f8;
+  background-color: white; /* 背景色を白に変更 */
   padding: 4px;
+  border: 1px solid #eee; /* 薄いボーダーを追加 */
   border-radius: 4px;
   margin: 0 auto;
 }
