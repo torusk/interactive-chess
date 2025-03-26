@@ -75,13 +75,13 @@ button:disabled {
   margin-bottom: 20px;
 }
 #history {
-  max-height: 150px;
+  max-height: 300px;
   overflow-y: auto;
   margin-top: 10px;
   padding: 10px;
   background-color: #f5f5f5;
   border-radius: 4px;
-  min-height: 50px;
+  min-height: 200px;
 }
 .history-move {
   display: inline-block;

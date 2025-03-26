@@ -28,9 +28,9 @@
           </div>
           
           <div class="main-btn-group">
-            <button id="resetBtn">リセット</button>
+            <button id="resetBtn" title="全ての履歴と局面をリセット">リセット</button>
             <button id="flipBtn">反転</button>
-            <button id="startPositionBtn">初期配置</button>
+            <button id="startPositionBtn" title="盤面を初期配置に表示（履歴は保持）">初期局面に移動</button>
             <!-- 将来の機能拡張のためにコメントアウト
             <button id="clearBoardBtn">全駒削除</button>
             -->
@@ -102,14 +102,6 @@
         <div id="history"></div>
         <!-- 追加：履歴をコピーするボタン -->
         <button id="copyHistoryBtn" class="copy-button">履歴をコピー</button>
-
-        <div class="section-title">PGN表記</div>
-        <div class="pgn-display" id="pgn-display"></div>
-
-        <div class="section-title">FEN表記</div>
-        <div class="fen-code" id="current-fen">
-          rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
-        </div>
 
         <div class="section-title">使用できる記法</div>
         <div class="notation-help">

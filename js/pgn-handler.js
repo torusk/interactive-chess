@@ -85,9 +85,9 @@ class PgnHandler {
 
     return `【チェス局面情報】
 手番: ${turn}
-FEN: ${fen}
 指し手の履歴: ${history}
-PGN: ${pgn}`;
+PGN: ${pgn}
+FEN: ${fen}`;
   }
 }
 

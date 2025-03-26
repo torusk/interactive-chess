@@ -40,6 +40,13 @@ $(document).ready(function () {
     historyManager.initialize(game.fen());
     updateUI();
   });
+  
+  // 初期配置ボタン押下時のコールバック
+  chessBoard.setStartPositionCallback(function (game) {
+    // 履歴は維持したまま、現在位置を変更
+    historyManager.goToFirstPosition();
+    updateUI();
+  });
 
   // UIイベントの設定
   setupUIEvents();

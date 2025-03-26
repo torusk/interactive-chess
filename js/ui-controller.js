@@ -38,11 +38,9 @@ class UIController {
 
   // 盤面の状態を更新
   updateBoard(game) {
-    // FEN表記を更新
-    $("#current-fen").text(game.fen());
-
-    // PGN表記を更新
-    $("#pgn-display").text(game.pgn());
+    // PGNとFEN表示は非表示にしたので処理をコメントアウト
+    // $("#current-fen").text(game.fen());
+    // $("#pgn-display").text(game.pgn());
   }
 
   // 履歴表示を更新

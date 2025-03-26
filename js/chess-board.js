@@ -165,12 +165,12 @@ class ChessBoard {
 
   // 初期配置に戻す
   setStartPosition() {
-    this.game = new Chess();
+    // 履歴は保持したまま、表示だけ初期配置に戻す
     this.board.position("start");
-
-    // 初期配置に戻した後のイベントをトリガー
-    if (typeof this.onResetCallback === "function") {
-      this.onResetCallback(this.game);
+    
+    // 現在の履歴は維持しつつ、表示を初期配置に戻したことを通知
+    if (typeof this.onStartPositionCallback === "function") {
+      this.onStartPositionCallback(this.game);
     }
   }
 
@@ -198,6 +198,10 @@ class ChessBoard {
 
   setResetCallback(callback) {
     this.onResetCallback = callback;
+  }
+
+  setStartPositionCallback(callback) {
+    this.onStartPositionCallback = callback;
   }
 
   // 現在のゲームインスタンスを取得
