@@ -30,7 +30,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
-  gap: 5px;
+  gap: 2px; /* 間隔を最小化 */
+  justify-content: flex-start; /* 左揃え */
 }
 
 .mini-row input {
@@ -39,13 +40,15 @@
   font-size: 0.85em;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 60px;
+  margin-left: 1px; /* 余白を最小化 */
+  max-width: 120px; /* 最大幅を設定 */
 }
 
 .mini-row button {
   padding: 2px 6px;
   font-size: 0.85em;
   min-width: 40px;
+  margin-left: 2px; /* 入力欄との間隔を最小化 */
 }
 
 @media (max-width: 768px) {
@@ -300,11 +303,12 @@ button:disabled {
 }
 .white-indicator,
 .black-indicator {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   border-radius: 50%;
-  margin-right: 5px;
+  margin-right: 2px;
+  flex-shrink: 0; /* 縮小しないように */
 }
 .white-indicator {
   background-color: white;
@@ -316,10 +320,16 @@ button:disabled {
 .current-turn {
   font-weight: bold;
   color: #4a90e2;
-  margin-left: 5px;
+  margin-left: 2px;
+  width: 40px; /* 幅を縮小 */
+  display: inline-block; /* 幅を指定するために必要 */
+  text-align: left; /* 左揃え */
 }
 .not-turn {
   color: #999;
+  width: 40px; /* 幅を縮小 */
+  display: inline-block; /* 幅を指定するために必要 */
+  text-align: left; /* 左揃え */
 }
 .section-title {
   margin-top: 10px;
@@ -345,10 +355,10 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5px;
+  margin: 5px auto;
   margin-bottom: 8px;
-  width: 100%; /* 幅を100%に変更 */
-}
+  max-width: 100%;
+} 
 .copy-button {
   margin-top: 5px;
   margin-bottom: 10px;
@@ -370,16 +380,18 @@ button:disabled {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin: 8px 0;
-  width: 100%;
+  margin: 8px auto;
+  max-width: 100%;
+  justify-content: center; /* 中央揃え */
 }
 
 .input-section {
   flex: 1;
-  min-width: 150px;
+  min-width: 120px;
   background-color: #f8f8f8;
-  padding: 5px;
+  padding: 4px;
   border-radius: 4px;
+  margin: 0 auto;
 }
 
 .fen-input-row {

@@ -279,6 +279,10 @@ $(document).ready(function () {
     // コントロールコンテナのサイズも一致させる
     $('.control-container').css('width', width + 'px');
     
+    // ボードの下のボタン等の幅も調整
+    $('.extended-nav-controls').css('width', width + 'px');
+    $('.inputs-row').css('width', width + 'px');
+    
     // チェス盤のサイズを変更
     chessBoard.resizeBoard(width);
     

@@ -13,12 +13,12 @@ class UIController {
         .removeClass("not-turn")
         .addClass("current-turn");
       $("#black-turn-indicator")
-        .text("待機中")
+        .text("待機")
         .removeClass("current-turn")
         .addClass("not-turn");
     } else {
       $("#white-turn-indicator")
-        .text("待機中")
+        .text("待機")
         .removeClass("current-turn")
         .addClass("not-turn");
       $("#black-turn-indicator")
