@@ -30,8 +30,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
-  gap: 2px; /* 間隔を最小化 */
-  justify-content: flex-start; /* 左揃え */
+  gap: 5px; /* 通常の間隔に戻す */
 }
 
 .mini-row input {
@@ -40,15 +39,12 @@
   font-size: 0.85em;
   border: 1px solid #ccc;
   border-radius: 3px;
-  margin-left: 1px; /* 余白を最小化 */
-  max-width: 120px; /* 最大幅を設定 */
 }
 
 .mini-row button {
   padding: 2px 6px;
   font-size: 0.85em;
   min-width: 40px;
-  margin-left: 2px; /* 入力欄との間隔を最小化 */
 }
 
 @media (max-width: 768px) {
@@ -303,12 +299,11 @@ button:disabled {
 }
 .white-indicator,
 .black-indicator {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   display: inline-block;
   border-radius: 50%;
-  margin-right: 2px;
-  flex-shrink: 0; /* 縮小しないように */
+  margin-right: 5px;
 }
 .white-indicator {
   background-color: white;
@@ -321,15 +316,10 @@ button:disabled {
   font-weight: bold;
   color: #4a90e2;
   margin-left: 2px;
-  width: 40px; /* 幅を縮小 */
-  display: inline-block; /* 幅を指定するために必要 */
-  text-align: left; /* 左揃え */
 }
 .not-turn {
   color: #999;
-  width: 40px; /* 幅を縮小 */
-  display: inline-block; /* 幅を指定するために必要 */
-  text-align: left; /* 左揃え */
+  margin-left: 2px;
 }
 .section-title {
   margin-top: 10px;
