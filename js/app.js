@@ -48,6 +48,14 @@ $(document).ready(function () {
   
   // ページ読み込み後、高さを揃える
   setTimeout(adjustContainerHeights, 300);
+  
+  // ページ読み込み時に画面幅に応じて盤面サイズを自動調整
+  autoAdjustBoardSize();
+  
+  // リサイズ時に盤面サイズを自動調整
+  $(window).resize(function() {
+    autoAdjustBoardSize();
+  });
 
   // UIイベントの設定関数
   function setupUIEvents() {
@@ -226,6 +234,24 @@ $(document).ready(function () {
     } else {
       // 無効な手の場合
       uiController.showMoveError(color, result.error);
+    }
+  }
+  
+  // 画面幅に応じて盤面サイズを自動調整する関数
+  function autoAdjustBoardSize() {
+    // 現在のウィンドウ幅を取得
+    const windowWidth = $(window).width();
+    
+    // 画面幅に応じてサイズを切り替え
+    if (windowWidth < 768) {
+      // 小さい画面ではスモールサイズ
+      changeBoardSize('small');
+    } else if (windowWidth < 1200) {
+      // 中程度の画面ではミディアムサイズ
+      changeBoardSize('medium');
+    } else {
+      // 大きい画面ではラージサイズ
+      changeBoardSize('large');
     }
   }
   
