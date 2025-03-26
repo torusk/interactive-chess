@@ -17,6 +17,29 @@
   .board-size-controls {
     margin-top: 5px;
   }
+  
+  .title-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* タイトル行のスタイル */
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 0.3em;
+}
+
+.title-container h1 {
+  margin: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+  text-align: center;
+  flex: 1;
 }
 
 body {
@@ -29,11 +52,7 @@ body {
   background-color: #f5f5f5;
 }
 h1 {
-  text-align: center;
   font-size: 1.5em;
-  margin-bottom: 0.5em;
-  border-bottom: 2px solid #4a90e2;
-  padding-bottom: 0.3em;
   color: #2c3e50;
 }
 .container {
