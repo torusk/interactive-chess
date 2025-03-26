@@ -233,9 +233,9 @@ $(document).ready(function () {
     if (size === 'small') {
       width = 320;
     } else if (size === 'medium') {
-      width = 400;
+      width = 420;
     } else if (size === 'large') {
-      width = 500;
+      width = 520;
     }
     
     // ボード要素にサイズクラスを適用
@@ -249,9 +249,6 @@ $(document).ready(function () {
     
     // チェス盤のサイズを変更
     chessBoard.resizeBoard(width);
-    
-    // ナビゲーションコントロールの幅も調整
-    $('.extended-nav-controls').css('max-width', width + 'px');
   }
   
   // PGN入力フォームから読み込む機能
