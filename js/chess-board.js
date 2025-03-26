@@ -203,8 +203,16 @@ class ChessBoard {
 
   // 特定のFENの局面を設定
   setPosition(fen) {
-    this.game = new Chess(fen);
-    this.board.position(fen);
+    try {
+      // FENが有効か検証
+      const chess = new Chess(fen);
+      this.game = chess;
+      this.board.position(fen);
+      return { success: true, error: null };
+    } catch (error) {
+      console.error("不正なFEN形式:", error);
+      return { success: false, error: "無効なFEN形式です" };
+    }
   }
 
   // イベントコールバックの設定

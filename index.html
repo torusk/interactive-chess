@@ -48,6 +48,16 @@
           </div>
         </div>
 
+        <!-- FEN入力セクション（新規追加） -->
+        <div class="fen-upload-container">
+          <div class="section-title">FEN読み込み</div>
+          <div class="fen-input-row">
+            <input type="text" id="fen-input" placeholder="FENを入力してください 例：rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1">
+            <button id="load-fen-btn">読み込む</button>
+          </div>
+          <div id="fen-input-error" class="input-error" style="display: none;">無効なFEN形式です</div>
+        </div>
+
         <!-- PGNインポート機能 -->
         <div class="pgn-import-container">
           <div class="section-title">PGN棋譜読み込み</div>

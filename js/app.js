@@ -58,6 +58,18 @@ $(document).ready(function () {
       chessBoard.flipBoard();
     });
     
+    // FEN読み込みボタン
+    $("#load-fen-btn").click(function() {
+      loadFenFromInput();
+    });
+    
+    // FEN入力フォームでEnterキーが押された場合も読み込みを実行
+    $("#fen-input").keypress(function(e) {
+      if (e.which === 13) {
+        loadFenFromInput();
+      }
+    });
+    
     // ボードサイズ変更ボタン
     $("#smallBoardBtn").click(function() {
       changeBoardSize('small');
@@ -260,5 +272,39 @@ $(document).ready(function () {
     
     // ナビゲーションコントロールの幅も調整
     $('.extended-nav-controls').css('max-width', width + 'px');
+  }
+  
+  // FEN入力フォームから読み込む機能
+  function loadFenFromInput() {
+    const fenInput = $("#fen-input").val().trim();
+    if (!fenInput) {
+      $("#fen-input-error").text("FENを入力してください").show();
+      setTimeout(() => {
+        $("#fen-input-error").fadeOut();
+      }, 3000);
+      return;
+    }
+    
+    // FENをセット
+    const result = chessBoard.setPosition(fenInput);
+    
+    if (result.success) {
+      // 成功時はエラー表示を非表示に
+      $("#fen-input-error").hide();
+      
+      // 入力フォームをクリア
+      $("#fen-input").val("");
+      
+      // 履歴を初期化
+      historyManager.initialize(chessBoard.getGame().fen());
+      updateUI();
+      
+    } else {
+      // エラー表示
+      $("#fen-input-error").text(result.error).show();
+      setTimeout(() => {
+        $("#fen-input-error").fadeOut();
+      }, 3000);
+    }
   }
 });

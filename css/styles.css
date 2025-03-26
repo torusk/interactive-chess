@@ -262,6 +262,39 @@ button:disabled {
   margin-bottom: 15px;
   width: 100%;
 }
+/* FEN入力セクションのスタイル */
+.fen-upload-container {
+  margin-top: 15px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.fen-input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#fen-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.input-error {
+  color: #e74c3c;
+  font-size: 0.9em;
+  background-color: #ffeaea;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: none;
+}
+
 .pgn-import-container {
   margin-top: 20px;
   background-color: #f8f8f8;
