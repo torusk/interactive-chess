@@ -1,3 +1,19 @@
+/* メディアクエリで小さい画面サイズに対応 */
+@media (max-width: 480px) {
+  .extended-nav-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .left-btn-group, .right-btn-group, .navigation-controls {
+    flex: 1 0 100%;
+    justify-content: center;
+  }
+  
+  .navigation-controls {
+    order: -1; /* ナビゲーションボタンを最初に表示 */
+  }
+}
 body {
   font-family: "Noto Sans JP", sans-serif;
   line-height: 1.6;
@@ -20,19 +36,24 @@ h1 {
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap; /* 画面幅が狭いときに折り返す */
 }
 .board-container {
   background-color: white;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* 中央に配置 */
 }
+
 .control-container {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  width: 100%; /* ここを変更 - フル幅に */
+  max-width: 400px; /* 最大幅を設定 */
+  margin: 0 auto; /* 中央に配置 */
 }
 .controls {
   display: flex;
@@ -196,13 +217,21 @@ button:disabled {
   margin-top: 10px;
   margin-bottom: 15px;
 }
+/* チェス盤のレスポンシブスタイル */
+.chess-board {
+  width: 400px;
+  max-width: 100%;
+}
+
+/* ナビゲーションコントロールもレスポンシブに */
 .extended-nav-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 5px;
   margin-bottom: 10px;
-  width: 400px; /* チェス盤に合わせて幅を設定 */
+  width: 100%; /* 幅を100%に変更 */
+  max-width: 400px; /* 最大幅を設定 */
 }
 .copy-button {
   margin-top: 10px;

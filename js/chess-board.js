@@ -17,7 +17,23 @@ class ChessBoard {
 
   // チェス盤を初期化
   initialize(elementId) {
+    // レスポンシブ対応のために幅を取得
+    const boardElement = document.getElementById(elementId);
+    const containerWidth = boardElement.parentElement.clientWidth - 30; // パディングを考慮
+    const boardWidth = Math.min(400, containerWidth); // 最大400px、それ以下ならコンテナの幅に合わせる
+    
+    // 盤面の幅を設定
+    this.boardConfig.width = boardWidth;
+    
     this.board = Chessboard(elementId, this.boardConfig);
+    
+    // ウィンドウのリサイズ時に盤面の大きさを再計算
+    window.addEventListener('resize', () => {
+      const newContainerWidth = boardElement.parentElement.clientWidth - 30;
+      const newBoardWidth = Math.min(400, newContainerWidth);
+      this.board.resize();
+    });
+    
     return this.board;
   }
 
