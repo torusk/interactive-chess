@@ -48,13 +48,27 @@ $(document).ready(function () {
 
   // UIイベントの設定関数
   function setupUIEvents() {
-    // ボタン処理
+    // リセットボタン
     $("#resetBtn").click(function () {
       chessBoard.resetBoard();
     });
 
+    // 盤面反転ボタン
     $("#flipBtn").click(function () {
       chessBoard.flipBoard();
+    });
+    
+    // ボードサイズ変更ボタン
+    $("#smallBoardBtn").click(function() {
+      changeBoardSize('small');
+    });
+    
+    $("#mediumBoardBtn").click(function() {
+      changeBoardSize('medium');
+    });
+    
+    $("#largeBoardBtn").click(function() {
+      changeBoardSize('large');
     });
 
     // 初期局面ボタンは削除済み
@@ -218,5 +232,33 @@ $(document).ready(function () {
       // 無効な手の場合
       uiController.showMoveError(color, result.error);
     }
+  }
+  
+  // チェス盤のサイズを変更する関数
+  function changeBoardSize(size) {
+    // サイズに応じて幅を設定
+    let width;
+    if (size === 'small') {
+      width = 320;
+    } else if (size === 'medium') {
+      width = 400;
+    } else if (size === 'large') {
+      width = 500;
+    }
+    
+    // ボード要素にサイズクラスを適用
+    const boardElement = $('#board');
+    boardElement.removeClass('board-size-small board-size-medium board-size-large');
+    boardElement.addClass('board-size-' + size);
+    
+    // サイズボタンのアクティブ状態を更新
+    $('.size-btn').removeClass('size-btn-active');
+    $('#' + size + 'BoardBtn').addClass('size-btn-active');
+    
+    // チェス盤のサイズを変更
+    chessBoard.resizeBoard(width);
+    
+    // ナビゲーションコントロールの幅も調整
+    $('.extended-nav-controls').css('max-width', width + 'px');
   }
 });

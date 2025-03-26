@@ -13,7 +13,12 @@
   .navigation-controls {
     order: -1; /* ナビゲーションボタンを最初に表示 */
   }
+  
+  .board-size-controls {
+    margin-top: 5px;
+  }
 }
+
 body {
   font-family: "Noto Sans JP", sans-serif;
   line-height: 1.6;
@@ -269,6 +274,7 @@ button:disabled {
   margin-left: 5px;
   font-size: 0.9em;
 }
+
 /* ナビゲーションコントロールの新しいスタイル */
 .left-btn-group, .right-btn-group {
   flex: 1;
@@ -281,6 +287,7 @@ button:disabled {
 
 .right-btn-group {
   justify-content: flex-end;
+  align-items: center;
 }
 
 .navigation-controls {
@@ -359,4 +366,45 @@ button:disabled {
 }
 .first-move-btn:hover {
   background-color: #2ecc71;
+}
+
+/* ボードサイズ調整ボタン */
+.board-size-controls {
+  display: flex;
+  margin-left: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.size-btn {
+  padding: 3px 8px;
+  background-color: #f0f0f0;
+  color: #666;
+  border: none;
+  font-size: 0.8em;
+  margin: 0;
+  border-radius: 0;
+}
+
+.size-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.size-btn-active {
+  background-color: #4a90e2;
+  color: white;
+}
+
+/* レスポンシブ対応のためのチェス盤サイズクラス */
+.board-size-small {
+  width: 320px;
+}
+
+.board-size-medium {
+  width: 400px;
+}
+
+.board-size-large {
+  width: 500px;
 }

@@ -230,6 +230,16 @@ class ChessBoard {
     this.game = game;
     this.board.position(game.fen());
   }
+  
+  // ボードのサイズを変更
+  resizeBoard(width) {
+    this.board.resize();
+    this.board = Chessboard('board', {
+      ...this.boardConfig,
+      position: this.game.fen(),
+      width: width
+    });
+  }
 }
 
 // グローバルなChessBoardインスタンスを作成
