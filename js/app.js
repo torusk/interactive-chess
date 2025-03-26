@@ -41,12 +41,7 @@ $(document).ready(function () {
     updateUI();
   });
   
-  // 初期配置ボタン押下時のコールバック
-  chessBoard.setStartPositionCallback(function (game) {
-    // 履歴は維持したまま、現在位置を変更
-    historyManager.goToFirstPosition();
-    updateUI();
-  });
+  // 初期局面ボタンは削除し、最初の局面へボタンに機能統合
 
   // UIイベントの設定
   setupUIEvents();
@@ -62,9 +57,7 @@ $(document).ready(function () {
       chessBoard.flipBoard();
     });
 
-    $("#startPositionBtn").click(function () {
-      chessBoard.setStartPosition();
-    });
+    // 初期局面ボタンは削除済み
 
     /* 将来の機能拡張のためにコメントアウト
     $("#clearBoardBtn").click(function () {

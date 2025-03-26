@@ -311,3 +311,13 @@ button:disabled {
 #resetBtn:hover {
   background-color: #c0392b;
 }
+
+/* 最初の局面へボタンを強調 */
+.first-move-btn {
+  background-color: #27ae60;
+  font-weight: bold;
+  padding: 6px 14px;
+}
+.first-move-btn:hover {
+  background-color: #2ecc71;
+}
