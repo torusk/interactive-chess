@@ -202,6 +202,7 @@ button:disabled {
   align-items: center;
   margin-top: 5px;
   margin-bottom: 10px;
+  width: 400px; /* チェス盤に合わせて幅を設定 */
 }
 .copy-button {
   margin-top: 10px;
@@ -246,11 +247,9 @@ button:disabled {
 
 .main-btn-group {
   display: flex;
-  gap: 6px;
+  gap: 15px; /* ボタン間の間隔を広げる */
   justify-content: center;
 }
-
-/* styles.css に追加するスタイル */
 
 /* 分岐のある手のスタイル */
 .history-move.has-variation {
@@ -303,4 +302,12 @@ button:disabled {
 
 .return-to-main:hover {
   background-color: #3a7fcf;
+}
+
+/* リセットボタンの赤色スタイル */
+#resetBtn {
+  background-color: #e74c3c;
+}
+#resetBtn:hover {
+  background-color: #c0392b;
 }
