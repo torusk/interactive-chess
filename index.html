@@ -58,17 +58,18 @@
           <div id="fen-input-error" class="input-error" style="display: none;">無効なFEN形式です</div>
         </div>
 
-        <!-- PGNインポート機能 -->
-        <div class="pgn-import-container">
-          <div class="section-title">PGN棋譜読み込み</div>
-          <textarea
-            id="pgn-import-textarea"
-            class="pgn-textarea"
-            placeholder="ここにPGN形式の棋譜を貼り付けてください。例：1. e4 e5 2. Nf3 Nc6 ..."
-          ></textarea>
-          <button id="import-pgn-btn" class="import-button">
-            棋譜を読み込む
-          </button>
+        <!-- PGN読み込み機能 -->
+        <div class="fen-upload-container">
+          <div class="section-title">PGN読み込み</div>
+          <div class="fen-input-row">
+            <input
+              type="text"
+              id="pgn-import-input"
+              placeholder="PGN棋譜をコピーペーストしてください 例：1. e4 e5 2. Nf3 Nc6..."
+            >
+            <button id="import-pgn-btn">読み込む</button>
+          </div>
+          <div id="pgn-input-error" class="input-error" style="display: none;">無効なPGN形式です</div>
         </div>
       </div>
 

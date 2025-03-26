@@ -166,33 +166,13 @@ $(document).ready(function () {
 
     // PGN棋譜読み込みボタン
     $("#import-pgn-btn").click(function () {
-      const pgnText = $("#pgn-import-textarea").val().trim();
-      if (!pgnText) {
-        alert("棋譜を入力してください");
-        return;
-      }
-
-      try {
-        // PGNを読み込み
-        const result = pgnHandler.importPgn(pgnText);
-
-        // 新しいゲームをロード
-        chessBoard.loadPgn(result.game);
-
-        // 履歴を再構築
-        historyManager.rebuildFromPGN(result.game, result.comments);
-
-        // UI更新
-        updateUI();
-
-        // インポート成功のメッセージ
-        alert("棋譜を正常に読み込みました");
-
-        // テキストエリアをクリア
-        $("#pgn-import-textarea").val("");
-      } catch (error) {
-        console.error("PGN読み込みエラー:", error);
-        alert("棋譜の読み込み中にエラーが発生しました: " + error.message);
+      loadPgnFromInput();
+    });
+    
+    // PGN入力フォームでEnterキーが押された場合も読み込みを実行
+    $("#pgn-import-input").keypress(function(e) {
+      if (e.which === 13) {
+        loadPgnFromInput();
       }
     });
 
@@ -272,6 +252,47 @@ $(document).ready(function () {
     
     // ナビゲーションコントロールの幅も調整
     $('.extended-nav-controls').css('max-width', width + 'px');
+  }
+  
+  // PGN入力フォームから読み込む機能
+  function loadPgnFromInput() {
+    const pgnInput = $("#pgn-import-input").val().trim();
+    if (!pgnInput) {
+      $("#pgn-input-error").text("PGNを入力してください").show();
+      setTimeout(() => {
+        $("#pgn-input-error").fadeOut();
+      }, 3000);
+      return;
+    }
+    
+    try {
+      // PGNを読み込み
+      const result = pgnHandler.importPgn(pgnInput);
+      
+      // 新しいゲームをロード
+      chessBoard.loadPgn(result.game);
+      
+      // 履歴を再構築
+      historyManager.rebuildFromPGN(result.game, result.comments);
+      
+      // UI更新
+      updateUI();
+      
+      // 成功時はエラー表示を非表示に
+      $("#pgn-input-error").hide();
+      
+      // 入力フォームをクリア
+      $("#pgn-import-input").val("");
+      
+    } catch (error) {
+      console.error("PGN読み込みエラー:", error);
+      
+      // エラー表示
+      $("#pgn-input-error").text("無効なPGN形式です: " + error.message).show();
+      setTimeout(() => {
+        $("#pgn-input-error").fadeOut();
+      }, 3000);
+    }
   }
   
   // FEN入力フォームから読み込む機能
