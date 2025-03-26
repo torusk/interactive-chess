@@ -48,72 +48,49 @@
           </div>
         </div>
 
-        <!-- FEN入力セクション（新規追加） -->
-        <div class="fen-upload-container">
-          <div class="section-title">FEN読み込み</div>
-          <div class="fen-input-row">
-            <input type="text" id="fen-input" placeholder="FENを入力してください 例：rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1">
-            <button id="load-fen-btn">読み込む</button>
+        <!-- FENとPGN読み込み機能（並列表示） -->
+        <div class="inputs-row">
+          <!-- FEN入力セクション -->
+          <div class="input-section">
+            <div class="section-title">FEN読み込み</div>
+            <div class="fen-input-row">
+              <input type="text" id="fen-input" placeholder="FENを入力...">
+              <button id="load-fen-btn">読込</button>
+            </div>
+            <div id="fen-input-error" class="input-error" style="display: none;">無効なFEN形式です</div>
           </div>
-          <div id="fen-input-error" class="input-error" style="display: none;">無効なFEN形式です</div>
-        </div>
 
-        <!-- PGN読み込み機能 -->
-        <div class="fen-upload-container">
-          <div class="section-title">PGN読み込み</div>
-          <div class="fen-input-row">
-            <input
-              type="text"
-              id="pgn-import-input"
-              placeholder="PGN棋譜をコピーペーストしてください 例：1. e4 e5 2. Nf3 Nc6..."
-            >
-            <button id="import-pgn-btn">読み込む</button>
+          <!-- PGN読み込み機能 -->
+          <div class="input-section">
+            <div class="section-title">PGN読み込み</div>
+            <div class="fen-input-row">
+              <input type="text" id="pgn-import-input" placeholder="PGN棋譜を入力...">
+              <button id="import-pgn-btn">読込</button>
+            </div>
+            <div id="pgn-input-error" class="input-error" style="display: none;">無効なPGN形式です</div>
           </div>
-          <div id="pgn-input-error" class="input-error" style="display: none;">無効なPGN形式です</div>
         </div>
       </div>
 
       <div class="control-container">
         <div class="section-title">チェス記法で駒を動かす</div>
-        <div class="input-move-container">
-          <div class="input-move-row">
-            <div class="input-move-white">
-              <label>
-                <span class="white-indicator"></span> 白の手:
-                <span id="white-turn-indicator" class="current-turn">手番</span>
-              </label>
-              <input
-                type="text"
-                id="white-move-input"
-                class="move-input"
-                placeholder="例: e2e4, e4, Nf3"
-              />
-              <div id="white-move-error" class="move-error">
-                無効な手です。再入力してください。
-              </div>
-            </div>
-            <button id="white-move-btn" class="move-button">指す</button>
+        <div class="super-compact-move">
+          <div class="mini-row">
+            <span class="white-indicator"></span>
+            <span id="white-turn-indicator" class="current-turn">白</span>
+            <input type="text" id="white-move-input" placeholder="例: e4">
+            <button id="white-move-btn">指す</button>
           </div>
 
-          <div class="input-move-row">
-            <div class="input-move-black">
-              <label>
-                <span class="black-indicator"></span> 黒の手:
-                <span id="black-turn-indicator" class="not-turn">待機中</span>
-              </label>
-              <input
-                type="text"
-                id="black-move-input"
-                class="move-input"
-                placeholder="例: e7e5, c5, Nf6"
-              />
-              <div id="black-move-error" class="move-error">
-                無効な手です。再入力してください。
-              </div>
-            </div>
-            <button id="black-move-btn" class="move-button">指す</button>
+          <div class="mini-row">
+            <span class="black-indicator"></span>
+            <span id="black-turn-indicator" class="not-turn">黒</span>
+            <input type="text" id="black-move-input" placeholder="例: e5">
+            <button id="black-move-btn">指す</button>
           </div>
         </div>
+        <div id="white-move-error" class="move-error"></div>
+        <div id="black-move-error" class="move-error"></div>
 
         <div class="section-title">指し手の履歴</div>
         <div id="history"></div>
@@ -122,14 +99,7 @@
 
         <div class="section-title">使用できる記法</div>
         <div class="notation-help">
-          <ul>
-            <li>
-              <strong>標準代数記法 (SAN):</strong> e4, Nf3, Bxe5, O-O
-              (キングサイドキャスリング)
-            </li>
-            <li><strong>長い代数記法:</strong> e2e4, g1f3, f1c4</li>
-            <li><strong>UCI記法:</strong> e2e4, g1f3</li>
-          </ul>
+          <strong>SAN:</strong> e4, Nf3, Bxe5 | <strong>長い記法:</strong> e2e4, g1f3 | <strong>UCI:</strong> e2e4
         </div>
       </div>
     </div>

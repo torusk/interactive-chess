@@ -1,3 +1,67 @@
+@media (max-width: 700px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .board-container {
+    border-radius: 8px 8px 0 0;
+    border-right: solid 1px #ccc;
+    border-bottom: none;
+  }
+  
+  .control-container {
+    border-radius: 0 0 8px 8px;
+    width: 400px;
+    max-width: 400px;
+  }
+}
+
+/* 超コンパクトな入力フォーム */
+.super-compact-move {
+  margin: 5px 0 10px 0;
+}
+
+.mini-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 5px;
+}
+
+.mini-row input {
+  flex: 1;
+  padding: 4px 6px;
+  font-size: 0.85em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 60px;
+}
+
+.mini-row button {
+  padding: 2px 6px;
+  font-size: 0.85em;
+  min-width: 40px;
+}
+
+@media (max-width: 768px) {
+  .inputs-row {
+    flex-direction: column;
+  }
+  
+  .input-section {
+    width: 100%;
+  }
+}
+
+#load-fen-btn,
+#import-pgn-btn {
+  white-space: nowrap;
+  padding: 6px 8px;
+  font-size: 0.9em;
+  min-width: unset;
+}
+
 /* メディアクエリで小さい画面サイズに対応 */
 @media (max-width: 480px) {
   .extended-nav-controls {
@@ -57,27 +121,29 @@ h1 {
 }
 .container {
   display: flex;
-  gap: 20px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  flex-wrap: wrap; /* 画面幅が狭いときに折り返す */
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
 }
 .board-container {
   background-color: white;
-  padding: 15px;
-  border-radius: 8px;
+  padding: 15px 15px 10px 15px;
+  border-radius: 8px 0 0 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 auto; /* 中央に配置 */
+  margin: 0;
+  border-right: none;
 }
 
 .control-container {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 15px;
+  border-radius: 0 8px 8px 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%; /* ここを変更 - フル幅に */
-  max-width: 400px; /* 最大幅を設定 */
-  margin: 0 auto; /* 中央に配置 */
+  width: 300px;
+  max-width: 300px;
+  margin: 0;
 }
 .controls {
   display: flex;
@@ -120,13 +186,14 @@ button:disabled {
   margin-bottom: 20px;
 }
 #history {
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 5px;
+  padding: 6px;
   background-color: #f5f5f5;
   border-radius: 4px;
-  min-height: 200px;
+  min-height: 120px;
+  font-size: 0.9em;
 }
 .history-move {
   display: inline-block;
@@ -152,33 +219,36 @@ button:disabled {
 .history-move.future-move:hover {
   background-color: #e0e0e0;
 }
-.input-move-container {
+/* コンパクトな移動入力フォームのスタイル */
+.compact-move-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 8px;
+  margin: 10px 0;
   background-color: #f8f8f8;
-  padding: 15px;
+  padding: 10px;
   border-radius: 8px;
 }
-.input-move-row {
+
+.move-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
-.input-move-white {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 5px 10px;
-  flex: 1;
-  border-radius: 4px;
+
+.move-color-white,
+.move-color-black {
+  display: flex;
+  align-items: center;
+  width: 40px;
 }
-.input-move-black {
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  padding: 5px 10px;
-  flex: 1;
-  border-radius: 4px;
+
+.move-color-white {
+  color: #333;
+}
+
+.move-color-black {
+  color: #333;
 }
 .move-input {
   width: 100%;
@@ -188,12 +258,14 @@ button:disabled {
   font-family: monospace;
 }
 .move-button {
-  padding: 8px 12px;
+  padding: 6px 10px;
   background-color: #4a90e2;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  white-space: nowrap;
+  min-width: 40px;
 }
 .move-error {
   color: #e74c3c;
@@ -202,9 +274,13 @@ button:disabled {
   display: none;
 }
 .notation-help {
-  font-size: 0.85em;
-  margin-top: 10px;
+  font-size: 0.8em;
+  margin-top: 3px;
+  padding: 6px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
   color: #666;
+  text-align: center;
 }
 .white-indicator,
 .black-indicator {
@@ -230,10 +306,11 @@ button:disabled {
   color: #999;
 }
 .section-title {
-  margin-top: 15px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 6px;
   color: #2c3e50;
   font-weight: bold;
+  font-size: 0.95em;
 }
 .nav-controls {
   display: flex;
@@ -253,37 +330,58 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   width: 100%; /* 幅を100%に変更 */
   max-width: 400px; /* 最大幅を設定 */
 }
 .copy-button {
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   width: 100%;
+  background-color: #4CAF50;
 }
 /* FEN入力セクションのスタイル */
 .fen-upload-container {
-  margin-top: 15px;
+  margin-top: 10px;
   background-color: #f8f8f8;
-  padding: 15px;
+  padding: 10px;
   border-radius: 8px;
   width: 100%;
   max-width: 400px;
 }
 
-.fen-input-row {
+/* 左右カラムレイアウトの入力行 */
+.inputs-row {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 8px 0;
+  width: 100%;
 }
 
-#fen-input {
+.input-section {
   flex: 1;
-  padding: 8px;
+  min-width: 150px;
+  background-color: #f8f8f8;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.fen-input-row {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+#fen-input,
+#pgn-import-input,
+.move-input {
+  flex: 1;
+  padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-family: monospace;
+  font-size: 0.9em;
 }
 
 .input-error {
