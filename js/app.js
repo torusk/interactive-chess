@@ -45,6 +45,9 @@ $(document).ready(function () {
 
   // UIイベントの設定
   setupUIEvents();
+  
+  // ページ読み込み後、高さを揃える
+  setTimeout(adjustContainerHeights, 300);
 
   // UIイベントの設定関数
   function setupUIEvents() {
@@ -247,8 +250,35 @@ $(document).ready(function () {
     $('.size-btn').removeClass('size-btn-active');
     $('#' + size + 'BoardBtn').addClass('size-btn-active');
     
+    // コントロールコンテナのサイズも一致させる
+    $('.control-container').css('width', width + 'px');
+    
     // チェス盤のサイズを変更
     chessBoard.resizeBoard(width);
+    
+    // 高さを揃える処理を追加（少し遅延させて盤面のレンダリングが完了するのを待つ）
+    setTimeout(adjustContainerHeights, 100);
+  }
+  
+  // 盤面とコントロールコンテナの高さを揃える関数
+  function adjustContainerHeights() {
+    const boardContainer = $('.board-container');
+    const controlContainer = $('.control-container');
+    
+    // 一度高さをリセット
+    boardContainer.css('height', 'auto');
+    controlContainer.css('height', 'auto');
+    
+    // 少し遅延させて高さを計算
+    setTimeout(() => {
+      // どちらか高い方に合わせる
+      const boardHeight = boardContainer.outerHeight();
+      const controlHeight = controlContainer.outerHeight();
+      const maxHeight = Math.max(boardHeight, controlHeight);
+      
+      boardContainer.css('height', maxHeight + 'px');
+      controlContainer.css('height', maxHeight + 'px');
+    }, 50);
   }
   
   // PGN入力フォームから読み込む機能

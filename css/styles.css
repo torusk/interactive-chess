@@ -110,9 +110,9 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   line-height: 1.6;
   color: #333;
-  max-width: 1200px;
+  max-width: 1500px; /* サイズを広げてデスクトップで十分な余白を確保 */
   margin: 0 auto;
-  padding: 12px;
+  padding: 20px;
   background-color: #f5f5f5;
 }
 h1 {
@@ -124,9 +124,9 @@ h1 {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
-  max-width: 1000px; /* MacBook Airの画面幅にあわせて広げる */
+  max-width: 1400px; /* デスクトップ画面幅に合わせてさらに広げる */
   margin: 0 auto;
-  gap: 2px; /* カラム間に小さな余白を追加 */
+  gap: 20px; /* カラム間の余白を増やす */
 }
 .board-container {
   background-color: white;
@@ -135,6 +135,8 @@ h1 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0;
   border-right: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .control-container {
@@ -142,9 +144,11 @@ h1 {
   padding: 15px;
   border-radius: 0 8px 8px 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  max-width: 300px;
+  width: 420px; /* デフォルトはMediumサイズに合わせる */
+  max-width: 100%; /* レスポンシブ対応 */
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 .controls {
   display: flex;
@@ -557,4 +561,21 @@ button:disabled {
 
 .board-size-large {
   width: 520px;
+}
+
+/* レスポンシブ時にコントロールコンテナを調整 */
+@media (max-width: 1100px) {
+  .control-container {
+    width: 100% !important;
+    max-width: 520px;
+    height: auto !important;
+  }
+  
+  .board-container {
+    height: auto !important;
+  }
+  
+  .container {
+    gap: 10px;
+  }
 }
