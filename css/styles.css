@@ -240,15 +240,15 @@ button:disabled {
   margin-left: 5px;
   font-size: 0.9em;
 }
-.nav-btn-group {
+/* ナビゲーションコントロールの新しいスタイル */
+.utility-btn-group {
   display: flex;
-  gap: 5px;
+  gap: 10px;
 }
 
-.main-btn-group {
+.navigation-controls {
   display: flex;
-  gap: 15px; /* ボタン間の間隔を広げる */
-  justify-content: center;
+  gap: 5px;
 }
 
 /* 分岐のある手のスタイル */
